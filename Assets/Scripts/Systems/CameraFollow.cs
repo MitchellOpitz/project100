@@ -3,28 +3,25 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public Transform target;
-    private GameBoundary gameBoundary;
     private Camera cam;
 
-    void Start()
+    private void Start()
     {
-        gameBoundary = FindObjectOfType<GameBoundary>();
         cam = GetComponent<Camera>();
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         Vector3 desiredPosition = target.position;
 
-        // Calculate camera's half width and height
+        // Camera half dimensions
         float camHalfWidth = cam.orthographicSize * Screen.width / Screen.height;
         float camHalfHeight = cam.orthographicSize;
 
-        // Clamp camera position within the game boundary
-        desiredPosition.x = Mathf.Clamp(desiredPosition.x, gameBoundary.GetMinX() + camHalfWidth, gameBoundary.GetMaxX() - camHalfWidth);
-        desiredPosition.y = Mathf.Clamp(desiredPosition.y, gameBoundary.GetMinY() + camHalfHeight, gameBoundary.GetMaxY() - camHalfHeight);
+        // Clamp position using GameBoundary singleton
+        desiredPosition = GameBoundary.Instance.ClampPosition(desiredPosition, camHalfWidth, camHalfHeight);
 
-        // Maintain the original Z position
+        // Maintain original Z position
         transform.position = new Vector3(desiredPosition.x, desiredPosition.y, transform.position.z);
     }
 }
