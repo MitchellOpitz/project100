@@ -25,4 +25,17 @@ public class EnemyBase : MonoBehaviour
         // Destroy the enemy object
         Destroy(gameObject);
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Only trigger damage if the collider is the player
+        if (collision.CompareTag("Player"))
+        {
+            PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage();  // Only call TakeDamage here
+            }
+            Destroy(gameObject);
+        }
+    }
 }
