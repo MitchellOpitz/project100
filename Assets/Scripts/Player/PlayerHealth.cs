@@ -28,5 +28,6 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         OnPlayerDeath?.Invoke();  // Trigger game over event
+        Destroy(gameObject);      // Destroy the player object
     }
 }
