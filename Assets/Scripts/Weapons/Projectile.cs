@@ -23,22 +23,4 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Check for collision with an enemy
-        if (collision.CompareTag("Enemy"))
-        {
-            // Handle damage to enemy
-            /*
-            EnemyBase enemy = collision.GetComponent<EnemyBase>();
-            if (enemy != null)
-            {
-                // Call a method on the enemy to deal damage (modify as necessary)
-                enemy.TakeDamage();
-            }
-            */
-            Destroy(gameObject);  // Destroy the projectile after hitting an enemy
-        }
-    }
 }
