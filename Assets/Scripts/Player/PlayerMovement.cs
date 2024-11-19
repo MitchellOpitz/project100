@@ -6,11 +6,13 @@ public class PlayerMovement : MonoBehaviour
     public float rotationSpeed = 5f;
 
     private Rigidbody2D rb;
+    private GameBoundary gameBoundary;
     private BoxCollider2D playerCollider;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        gameBoundary = FindObjectOfType<GameBoundary>();
         playerCollider = GetComponent<BoxCollider2D>();
     }
 
@@ -24,6 +26,14 @@ public class PlayerMovement : MonoBehaviour
 
         // Calculate the desired new position
         Vector2 newPosition = rb.position + moveDirection * speed * Time.fixedDeltaTime;
+
+        // Get player's half width and height
+        float halfWidth = playerCollider.bounds.extents.x;
+        float halfHeight = playerCollider.bounds.extents.y;
+
+        // Clamp the position within the game boundary, accounting for player size
+        newPosition.x = Mathf.Clamp(newPosition.x, gameBoundary.GetMinX() + halfWidth, gameBoundary.GetMaxX() - halfWidth);
+        newPosition.y = Mathf.Clamp(newPosition.y, gameBoundary.GetMinY() + halfHeight, gameBoundary.GetMaxY() - halfHeight);
 
         rb.MovePosition(newPosition);
 
