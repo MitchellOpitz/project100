@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
         Enemy enemyScript = enemy.GetComponent<Enemy>();
 
         enemyScript.speed = data.speed;
-        // enemyScript.SetSpawnDirection(direction); // Pass the direction to the enemy
+        enemyScript.SetSpawnDirection(direction); // Pass the direction to the enemy
     }
 
     private Vector3 GetSpawnPosition(SpawnDirection direction)
