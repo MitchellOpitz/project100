@@ -20,7 +20,7 @@ public abstract class Enemy : MonoBehaviour
 
     private void Update()
     {
-        Move();
+        //Move();
     }
 
     // Method to handle the enemy's death

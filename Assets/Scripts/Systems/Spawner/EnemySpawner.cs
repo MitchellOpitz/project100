@@ -36,21 +36,48 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy(SpawnerData data)
     {
-        // Choose a random spawn location or fixed direction
-        Vector3 spawnPosition = GetRandomSpawnPosition();
+        SpawnDirection direction = (SpawnDirection)Random.Range(0, 4); // Randomly choose a direction
+        Vector3 spawnPosition = GetSpawnPosition(direction);
 
         GameObject enemy = Instantiate(data.enemyPrefab, spawnPosition, Quaternion.identity);
         Enemy enemyScript = enemy.GetComponent<Enemy>();
 
-        // Set the enemy's speed and direction
         enemyScript.speed = data.speed;
-        //  enemyScript.SetMovementDirection(data.spawnDirection);
+        // enemyScript.SetSpawnDirection(direction); // Pass the direction to the enemy
     }
 
-    private Vector3 GetRandomSpawnPosition()
+    private Vector3 GetSpawnPosition(SpawnDirection direction)
     {
-        // Return a spawn position based on the wave or predefined points (top, bottom, etc.)
-        // You can return random positions or fixed ones (e.g., top, bottom)
-        return new Vector3(-3, 3, 0); // Example
+        float x, y;
+        float buffer = 1f; // Offset for spawning enemies slightly outside the boundary
+        float spawnRange = 5f; // The range within which enemies spawn outside the boundary
+
+        switch (direction)
+        {
+            case SpawnDirection.Top:
+                x = Random.Range(GameBoundary.Instance.GetMinX(), GameBoundary.Instance.GetMaxX());
+                y = Random.Range(GameBoundary.Instance.GetMaxY() + buffer, GameBoundary.Instance.GetMaxY() + spawnRange);
+                break;
+            case SpawnDirection.Bottom:
+                x = Random.Range(GameBoundary.Instance.GetMinX(), GameBoundary.Instance.GetMaxX());
+                y = Random.Range(GameBoundary.Instance.GetMinY() - spawnRange, GameBoundary.Instance.GetMinY() - buffer);
+                break;
+            case SpawnDirection.Left:
+                x = Random.Range(GameBoundary.Instance.GetMinX() - spawnRange, GameBoundary.Instance.GetMinX() - buffer);
+                y = Random.Range(GameBoundary.Instance.GetMinY(), GameBoundary.Instance.GetMaxY());
+                break;
+            case SpawnDirection.Right:
+                x = Random.Range(GameBoundary.Instance.GetMaxX() + buffer, GameBoundary.Instance.GetMaxX() + spawnRange);
+                y = Random.Range(GameBoundary.Instance.GetMinY(), GameBoundary.Instance.GetMaxY());
+                break;
+            default:
+                // Default spawn position if something goes wrong
+                x = GameBoundary.Instance.GetMinX();
+                y = GameBoundary.Instance.GetMinY();
+                break;
+        }
+
+        return new Vector3(x, y, 0);
     }
+
 }
