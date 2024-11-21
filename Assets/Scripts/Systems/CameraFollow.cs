@@ -12,6 +12,8 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (target == null) return; // Prevent execution if the target is destroyed
+
         Vector3 desiredPosition = target.position;
 
         // Camera half dimensions
