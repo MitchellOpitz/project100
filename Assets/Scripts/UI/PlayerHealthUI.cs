@@ -11,8 +11,8 @@ public class PlayerHealthUI : MonoBehaviour
         PlayerHealth playerHealth = FindObjectOfType<PlayerHealth>();
         if (playerHealth != null)
         {
-            playerHealth.OnLivesChanged += UpdateHealthDisplay;
             UpdateHealthDisplay(playerHealth.currentLives);  // Initialize the health display
+            playerHealth.OnLivesChanged += UpdateHealthDisplay;
         }
     }
 

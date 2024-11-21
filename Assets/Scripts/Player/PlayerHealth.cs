@@ -14,6 +14,9 @@ public class PlayerHealth : MonoBehaviour
     {
         currentLives = maxLives;
         invulnerability = GetComponent<Invulnerability>();
+
+        // Immediately notify the UI of the initial health value
+        OnLivesChanged?.Invoke(currentLives);
     }
 
     public void TakeDamage()
