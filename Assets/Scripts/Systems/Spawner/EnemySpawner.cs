@@ -14,6 +14,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void StartSpawner()
     {
+        nextSpawnTime = Time.time + enemyData[0].spawnRate;
         // Start the spawning routine based on the configuration data
         StartCoroutine(SpawnEnemies());
     }
