@@ -1,8 +1,10 @@
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     public int health = 3;  // Default health for the enemy
+    public float speed;
+    public abstract void Move();
 
     // Method to handle taking damage
     public void TakeDamage()
@@ -14,6 +16,11 @@ public class EnemyBase : MonoBehaviour
         {
             Die();
         }
+    }
+
+    private void Update()
+    {
+        Move();
     }
 
     // Method to handle the enemy's death
