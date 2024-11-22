@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
+    public static event Action<int> OnEnemyKilled;
     public int health = 3;  // Default health for the enemy
     public float speed;
+    public int scoreValue = 100;
     public abstract void Move();
 
     // Method to handle taking damage
@@ -26,8 +29,7 @@ public abstract class Enemy : MonoBehaviour
     // Method to handle the enemy's death
     private void Die()
     {
-        // You can add death animations or effects here
-        Debug.Log(gameObject.name + " has been destroyed!");
+        OnEnemyKilled?.Invoke(scoreValue);
 
         // Destroy the enemy object
         Destroy(gameObject);
