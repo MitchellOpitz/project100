@@ -538,8 +538,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1319382616}
+  m_Children: []
   m_Father: {fileID: 450021457}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &552433396
@@ -555,7 +554,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData:
-  - {fileID: 1319382617}
+  - enemyPrefab: {fileID: 9199324241167919932, guid: a0698d248f788064f9d4f184551d7859, type: 3}
+    spawnRate: 1
+    speed: 3
+    health: 3
+  - enemyPrefab: {fileID: 262690688024122312, guid: 797968630b2ef1a47a2749465e0dbc81, type: 3}
+    spawnRate: 3
+    speed: 3
+    health: 3
 --- !u!1 &711788862
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,54 +1415,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultDuration: 3
---- !u!1 &1319382615
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1319382616}
-  - component: {fileID: 1319382617}
-  m_Layer: 0
-  m_Name: SpawnData
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1319382616
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1319382615}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 552433395}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1319382617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1319382615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bb8534fe8fd7714b8dfa54d39c86535, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 262690688024122312, guid: 797968630b2ef1a47a2749465e0dbc81, type: 3}
-  spawnRate: 1.6
-  speed: 4
-  health: 3
 --- !u!1 &1516121144
 GameObject:
   m_ObjectHideFlags: 0

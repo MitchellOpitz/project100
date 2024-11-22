@@ -3,19 +3,22 @@ using System.Collections;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public SpawnerData[] enemyData;
-    private float nextSpawnTime;
+    public SpawnerData[] enemyData; // Array of spawn configurations
+    private float[] nextSpawnTimes; // Tracks the next spawn time for each type
 
     private void Start()
     {
+        nextSpawnTimes = new float[enemyData.Length];
         StartSpawner();
-        Debug.Log("Spawnere started");
     }
 
     public void StartSpawner()
     {
-        nextSpawnTime = Time.time + enemyData[0].spawnRate;
-        // Start the spawning routine based on the configuration data
+        // Initialize the spawn times for each enemy type
+        for (int i = 0; i < enemyData.Length; i++)
+        {
+            nextSpawnTimes[i] = Time.time + enemyData[i].spawnRate;
+        }
         StartCoroutine(SpawnEnemies());
     }
 
@@ -23,12 +26,12 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            foreach (var data in enemyData)
+            for (int i = 0; i < enemyData.Length; i++)
             {
-                if (Time.time >= nextSpawnTime)
+                if (Time.time >= nextSpawnTimes[i])
                 {
-                    SpawnEnemy(data);
-                    nextSpawnTime = Time.time + data.spawnRate;
+                    SpawnEnemy(enemyData[i]);
+                    nextSpawnTimes[i] = Time.time + enemyData[i].spawnRate;
                 }
             }
             yield return null;
@@ -37,14 +40,21 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy(SpawnerData data)
     {
-        SpawnDirection direction = (SpawnDirection)Random.Range(0, 4); // Randomly choose a direction
+        // Randomly choose a spawn direction
+        SpawnDirection direction = (SpawnDirection)Random.Range(0, 4);
+
+        // Get the spawn position based on the direction
         Vector3 spawnPosition = GetSpawnPosition(direction);
 
+        // Instantiate and configure the enemy
         GameObject enemy = Instantiate(data.enemyPrefab, spawnPosition, Quaternion.identity);
         Enemy enemyScript = enemy.GetComponent<Enemy>();
 
-        enemyScript.speed = data.speed;
-        enemyScript.SetSpawnDirection(direction); // Pass the direction to the enemy
+        if (enemyScript != null)
+        {
+            enemyScript.speed = data.speed;
+            enemyScript.SetSpawnDirection(direction);
+        }
     }
 
     private Vector3 GetSpawnPosition(SpawnDirection direction)
@@ -72,7 +82,6 @@ public class EnemySpawner : MonoBehaviour
                 y = Random.Range(GameBoundary.Instance.GetMinY(), GameBoundary.Instance.GetMaxY());
                 break;
             default:
-                // Default spawn position if something goes wrong
                 x = GameBoundary.Instance.GetMinX();
                 y = GameBoundary.Instance.GetMinY();
                 break;
@@ -80,5 +89,4 @@ public class EnemySpawner : MonoBehaviour
 
         return new Vector3(x, y, 0);
     }
-
 }
