@@ -30,7 +30,7 @@ public class Projectile : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             // Handle damage to enemy
-            EnemyBase enemy = collision.GetComponent<EnemyBase>();
+            Enemy enemy = collision.GetComponent<Enemy>();
             if (enemy != null)
             {
                 // Call a method on the enemy to deal damage
