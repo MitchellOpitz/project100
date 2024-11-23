@@ -24,6 +24,11 @@ public abstract class Enemy : MonoBehaviour
     private void Update()
     {
         Move();
+
+        if (GameBoundary.Instance != null && GameBoundary.Instance.IsOutOfBounds(transform.position, 5f))
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Method to handle the enemy's death
