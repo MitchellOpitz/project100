@@ -4,6 +4,8 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour
 {
     public static event Action<int> OnEnemyKilled;
+    public static event Action<Vector3, Color> OnEnemyDeath;
+
     public int health = 3;  // Default health for the enemy
     public float speed;
     public int scoreValue = 100;
@@ -35,6 +37,11 @@ public abstract class Enemy : MonoBehaviour
     private void Die()
     {
         OnEnemyKilled?.Invoke(scoreValue);
+        
+        // Trigger instance-specific death event
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        Color particleColor = spriteRenderer != null ? spriteRenderer.color : Color.white;
+        OnEnemyDeath?.Invoke(transform.position, particleColor);
 
         // Destroy the enemy object
         Destroy(gameObject);
