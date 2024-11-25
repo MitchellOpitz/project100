@@ -46,7 +46,6 @@ public class ExperiencePickup : MonoBehaviour
 
         if (fadeProgress >= 1f)
         {
-            TriggerPickupEvent();
             Destroy(gameObject); // Destroy after fade out
         }
     }
