@@ -49,6 +49,7 @@ public class ExperienceManager : MonoBehaviour
 
             // Update the experience needed for the next level
             experienceNeededForNextLevel = CalculateExperienceForLevel(currentLevel);
+            OnExperienceUpdated?.Invoke(currentExperience, experienceNeededForNextLevel);
 
             Debug.Log($"Level Up! Current Level: {currentLevel}");
         }
