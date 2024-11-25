@@ -3,8 +3,12 @@ using UnityEngine;
 public class ExperiencePickup : MonoBehaviour
 {
     [SerializeField] private float colorCycleSpeed = 2f; // Speed of the hue change
+    [SerializeField] private float lifetime = 3f; // Time before fading starts
+    [SerializeField] private float fadeDuration = 2f; // Time it takes to fade out completely
+
     private SpriteRenderer spriteRenderer;
     private float hue;
+    private float elapsedTime = 0f;
 
     private void Awake()
     {
@@ -14,19 +18,40 @@ public class ExperiencePickup : MonoBehaviour
 
     private void Update()
     {
-        // Cycle through the hue
+        elapsedTime += Time.deltaTime;
+
+        CycleHue();
+        HandleFading();
+    }
+
+    private void CycleHue()
+    {
         hue += colorCycleSpeed * Time.deltaTime;
         if (hue > 1f) hue -= 1f; // Wrap around to keep hue in the range [0, 1]
+        Color currentColor = Color.HSVToRGB(hue, 1f, 1f);
+        spriteRenderer.color = new Color(currentColor.r, currentColor.g, currentColor.b, spriteRenderer.color.a); // Preserve alpha
+    }
 
-        // Convert hue to RGB and apply to the sprite
-        spriteRenderer.color = Color.HSVToRGB(hue, 1f, 1f);
+    private void HandleFading()
+    {
+        if (elapsedTime < lifetime) return;
+
+        float fadeProgress = (elapsedTime - lifetime) / fadeDuration;
+        Color currentColor = spriteRenderer.color;
+        currentColor.a = Mathf.Lerp(1f, 0f, fadeProgress);
+        spriteRenderer.color = currentColor;
+
+        if (fadeProgress >= 1f)
+        {
+            Destroy(gameObject); // Destroy after fade out
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            Destroy(gameObject); // Destroy the experience orb
+            Destroy(gameObject); // Destroy immediately on player pickup
         }
     }
 }
