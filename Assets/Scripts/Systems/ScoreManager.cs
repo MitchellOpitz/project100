@@ -29,7 +29,7 @@ public class ScoreManager : MonoBehaviour
         Enemy.OnEnemyKilled -= AddScore;
     }
 
-    private void AddScore(int value)
+    private void AddScore(int value, Vector3 position)
     {
         Debug.Log("Score added: " + value);
         score += value;

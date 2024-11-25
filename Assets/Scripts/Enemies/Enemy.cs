@@ -3,7 +3,8 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    public static event Action<int> OnEnemyKilled;
+    // Update the event to include position
+    public static event Action<int, Vector3> OnEnemyKilled;
     public static event Action<Vector3, Color> OnEnemyDeath;
 
     public int health = 3;  // Default health for the enemy
@@ -11,7 +12,6 @@ public abstract class Enemy : MonoBehaviour
     public int scoreValue = 100;
     public abstract void Move();
 
-    // Method to handle taking damage
     public void TakeDamage()
     {
         health -= 1;
@@ -33,11 +33,11 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    // Method to handle the enemy's death
     private void Die()
     {
-        OnEnemyKilled?.Invoke(scoreValue);
-        
+        // Pass both the score value and the enemy's position
+        OnEnemyKilled?.Invoke(scoreValue, transform.position);
+
         // Trigger instance-specific death event
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         Color particleColor = spriteRenderer != null ? spriteRenderer.color : Color.white;
@@ -46,6 +46,7 @@ public abstract class Enemy : MonoBehaviour
         // Destroy the enemy object
         Destroy(gameObject);
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Only trigger damage if the collider is the player
@@ -59,6 +60,7 @@ public abstract class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     public void SetSpawnDirection(SpawnDirection direction)
     {
         switch (direction)
