@@ -1,7 +1,10 @@
 using UnityEngine;
+using System;
 
 public class ExperiencePickup : MonoBehaviour
 {
+    public static event Action<ExperiencePickup> OnExperiencePickedUp; // Event for experience pickup
+
     [SerializeField] private float colorCycleSpeed = 2f; // Speed of the hue change
     [SerializeField] private float lifetime = 3f; // Time before fading starts
     [SerializeField] private float fadeDuration = 2f; // Time it takes to fade out completely
@@ -13,7 +16,7 @@ public class ExperiencePickup : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        hue = Random.value; // Start at a random hue for variation
+        hue = UnityEngine.Random.value; // Start at a random hue for variation
     }
 
     private void Update()
@@ -43,6 +46,7 @@ public class ExperiencePickup : MonoBehaviour
 
         if (fadeProgress >= 1f)
         {
+            TriggerPickupEvent();
             Destroy(gameObject); // Destroy after fade out
         }
     }
@@ -51,7 +55,13 @@ public class ExperiencePickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            TriggerPickupEvent();
             Destroy(gameObject); // Destroy immediately on player pickup
         }
+    }
+
+    private void TriggerPickupEvent()
+    {
+        OnExperiencePickedUp?.Invoke(this);
     }
 }

@@ -1,28 +1,23 @@
 using UnityEngine;
 
-public class ExperienceSystem : MonoBehaviour
+public class ExperienceManager : MonoBehaviour
 {
-    [SerializeField] private GameObject experiencePrefab; // The prefab for experience
-    [SerializeField] private int numberOfOrbs = 3; // Number of orbs to spawn per enemy
-    [SerializeField] private float spawnRadius = 1f; // Radius around the enemy to spawn orbs
+    private int totalExperience = 0;
+    [SerializeField] private int experiencePerPickup = 10; // Placeholder experience amount
 
     private void OnEnable()
     {
-        Enemy.OnEnemyKilled += SpawnExperience; // Directly subscribe
+        ExperiencePickup.OnExperiencePickedUp += OnExperiencePickedUp;
     }
 
     private void OnDisable()
     {
-        Enemy.OnEnemyKilled -= SpawnExperience; // Unsubscribe
+        ExperiencePickup.OnExperiencePickedUp -= OnExperiencePickedUp;
     }
 
-    private void SpawnExperience(int scoreValue, Vector3 position)
+    private void OnExperiencePickedUp(ExperiencePickup pickup)
     {
-        for (int i = 0; i < numberOfOrbs; i++)
-        {
-            Vector3 randomOffset = Random.insideUnitCircle * spawnRadius;
-            Vector3 spawnPosition = position + new Vector3(randomOffset.x, randomOffset.y, 0); // Adjust for 3D space
-            Instantiate(experiencePrefab, spawnPosition, Quaternion.identity);
-        }
+        totalExperience += experiencePerPickup;
+        Debug.Log($"Experience picked up! Total Experience: {totalExperience}");
     }
 }
