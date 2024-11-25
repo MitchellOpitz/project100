@@ -5,11 +5,19 @@ public class EnemySpawner : MonoBehaviour
 {
     public SpawnerData[] enemyData; // Array of spawn configurations
     private float[] nextSpawnTimes; // Tracks the next spawn time for each type
+    private bool isSpawningActive = true; // Flag to control whether spawning is active
 
     private void Start()
     {
         nextSpawnTimes = new float[enemyData.Length];
         StartSpawner();
+        ExperienceManager.OnLevelUp += StopSpawning; // Subscribe to the level-up event
+    }
+
+    private void OnDestroy()
+    {
+        // Unsubscribe when the object is destroyed
+        ExperienceManager.OnLevelUp -= StopSpawning;
     }
 
     public void StartSpawner()
@@ -24,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
-        while (true)
+        while (isSpawningActive)
         {
             for (int i = 0; i < enemyData.Length; i++)
             {
@@ -88,5 +96,19 @@ public class EnemySpawner : MonoBehaviour
         }
 
         return new Vector3(x, y, 0);
+    }
+
+    // Method to stop the spawner when the player levels up
+    private void StopSpawning(int level)
+    {
+        Debug.Log("Level up! Stopping enemy spawner.");
+        isSpawningActive = false; // Disable further spawning
+
+        // Find and destroy all enemies
+        Enemy[] allEnemies = FindObjectsOfType<Enemy>();
+        foreach (Enemy enemy in allEnemies)
+        {
+            enemy.DestroyEnemy(); // Call DestroyEnemy() on each enemy
+        }
     }
 }

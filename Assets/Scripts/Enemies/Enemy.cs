@@ -37,7 +37,11 @@ public abstract class Enemy : MonoBehaviour
     {
         // Pass both the score value and the enemy's position
         OnEnemyKilled?.Invoke(scoreValue, transform.position);
+        DestroyEnemy();
+    }
 
+    public void DestroyEnemy()
+    {
         // Trigger instance-specific death event
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         Color particleColor = spriteRenderer != null ? spriteRenderer.color : Color.white;

@@ -4,6 +4,7 @@ using System;
 public class ExperienceManager : MonoBehaviour
 {
     public static event Action<int, int> OnExperienceUpdated; // Event for UI updates: currentExperience, experienceNeededForNextLevel
+    public static event Action<int> OnLevelUp; // Event triggered when the player levels up
 
     private int currentExperience = 0;
     private int currentLevel = 1;
@@ -49,9 +50,14 @@ public class ExperienceManager : MonoBehaviour
 
             // Update the experience needed for the next level
             experienceNeededForNextLevel = CalculateExperienceForLevel(currentLevel);
-            OnExperienceUpdated?.Invoke(currentExperience, experienceNeededForNextLevel);
+
+            // Trigger the level-up event
+            OnLevelUp?.Invoke(currentLevel);
 
             Debug.Log($"Level Up! Current Level: {currentLevel}");
+
+            // Trigger the UI update event again after level-up
+            OnExperienceUpdated?.Invoke(currentExperience, experienceNeededForNextLevel);
         }
     }
 
