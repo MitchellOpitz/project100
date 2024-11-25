@@ -4,19 +4,30 @@ public class CameraFollow : MonoBehaviour
 {
     public Transform target;
     private Camera cam;
+    private ScreenShake screenShake;  // Reference to the CameraShake component
 
     private void Start()
     {
         cam = GetComponent<Camera>();
+        screenShake = GetComponent<ScreenShake>();  // Get the CameraShake component
     }
 
     private void LateUpdate()
     {
-        if (target == null) return; // Prevent execution if the target is destroyed
+        if (target == null) return;
 
         Vector3 desiredPosition = target.position;
 
-        // Camera half dimensions
+        // Apply screen shake if it's active
+        if (screenShake != null && screenShake.shakeDuration > 0)
+        {
+            desiredPosition += new Vector3(
+                Random.Range(-screenShake.shakeIntensity, screenShake.shakeIntensity),
+                Random.Range(-screenShake.shakeIntensity, screenShake.shakeIntensity),
+                0);
+        }
+
+        // Camera half dimensions for clamping
         float camHalfWidth = cam.orthographicSize * Screen.width / Screen.height;
         float camHalfHeight = cam.orthographicSize;
 
