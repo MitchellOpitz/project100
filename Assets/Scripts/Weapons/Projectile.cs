@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public static event Action<Vector3, Color> OnProjectileHit;
+
     public float speed = 10f;
     public float boundaryOffset = 10f;  // The offset for when the projectile goes out of bounds
 
@@ -35,6 +38,11 @@ public class Projectile : MonoBehaviour
             {
                 // Call a method on the enemy to deal damage
                 enemy.TakeDamage();
+                
+                // Emit an event for particle effects
+                SpriteRenderer bulletSprite = GetComponent<SpriteRenderer>();
+                Color particleColor = bulletSprite != null ? bulletSprite.color : Color.white;
+                OnProjectileHit?.Invoke(transform.position, particleColor);
             }
 
             Destroy(gameObject);  // Destroy the projectile after hitting an enemy
