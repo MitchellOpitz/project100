@@ -31,7 +31,6 @@ public class Countdown : MonoBehaviour
 
     private void StartCountdown()
     {
-        Debug.Log("Start event");
         StartCoroutine(CountdownCoroutine());
     }
 
