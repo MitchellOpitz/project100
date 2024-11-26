@@ -24,10 +24,10 @@ public class UpgradeManager : MonoBehaviour
             activeUpgrades.Add(selectedUpgrade.upgradeName, selectedUpgrade);
         }
 
-        // Example logic for applying the upgrade (for now, just log the selection)
+        // Log the upgrade selection
         Debug.Log($"Selected {selectedUpgrade.upgradeName} upgrade with rank {selectedUpgrade.rank}!");
 
-        // Trigger the event to notify other systems (e.g., UI to hide the menu, game logic to update the state)
+        // Trigger the event to notify other systems
         OnUpgradeSelected?.Invoke();
     }
 
@@ -42,5 +42,16 @@ public class UpgradeManager : MonoBehaviour
         {
             return 0; // Return 0 if the upgrade is not in the list
         }
+    }
+
+    // Method to check if an upgrade has reached its max rank
+    public static bool IsUpgradeMaxRank(string upgradeName)
+    {
+        if (activeUpgrades.ContainsKey(upgradeName))
+        {
+            Upgrade upgrade = activeUpgrades[upgradeName];
+            return upgrade.rank >= upgrade.maxRank;
+        }
+        return false; // If the upgrade isn't active, it can't be at max rank
     }
 }

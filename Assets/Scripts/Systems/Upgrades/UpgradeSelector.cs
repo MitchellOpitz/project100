@@ -20,12 +20,8 @@ public class UpgradeSelector : MonoBehaviour
         {
             Upgrade randomUpgrade = allUpgrades[Random.Range(0, allUpgrades.Count)];
 
-            /*
-            if (randomUpgrade.rank >= randomUpgrade.maxRank || selectedUpgrades.Contains(randomUpgrade))
-                continue;
-            */
-
-            if (selectedUpgrades.Contains(randomUpgrade))
+            // Skip upgrades that are at max rank or already selected
+            if (UpgradeManager.IsUpgradeMaxRank(randomUpgrade.upgradeName) || selectedUpgrades.Contains(randomUpgrade))
                 continue;
 
             selectedUpgrades.Add(randomUpgrade);
