@@ -34,6 +34,9 @@ public class UpgradeSelector : MonoBehaviour
                 continue;
             */
 
+            if (selectedUpgrades.Contains(randomUpgrade))
+                continue;
+
             selectedUpgrades.Add(randomUpgrade);
         }
     }
