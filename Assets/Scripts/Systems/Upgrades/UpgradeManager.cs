@@ -2,24 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UpgradeManager : MonoBehaviour
 {
     public static event Action OnUpgradeSelected;
-    [SerializeField] private Button upgradeButton;
 
-    // Start is called before the first frame update
-    void Start()
+    // This method will be called from the UI to apply the selected upgrade
+    public static void ApplyUpgrade(Upgrade selectedUpgrade)
     {
-        if (upgradeButton != null)
-        {
-            upgradeButton.onClick.AddListener(HandleUpgradeSelection);
-        }
-    }
+        // Example logic for applying the upgrade (for now, just log the selection)
+        Debug.Log($"Selected {selectedUpgrade.upgradeName} upgrade!");
 
-    private void HandleUpgradeSelection()
-    {
+        // Trigger the event to notify other systems (e.g., UI to hide the menu, game logic to update the state)
         OnUpgradeSelected?.Invoke();
     }
 }

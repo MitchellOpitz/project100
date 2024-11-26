@@ -12,15 +12,6 @@ public class UpgradeSelector : MonoBehaviour
     [Header("Number of Options")]
     public int optionsCount = 3;
 
-    private void Start()
-    {
-        SelectUpgrades();
-        foreach(var upgrade in selectedUpgrades)
-        {
-            Debug.Log(upgrade);
-        }
-    }
-
     public void SelectUpgrades()
     {
         selectedUpgrades.Clear();
@@ -43,6 +34,7 @@ public class UpgradeSelector : MonoBehaviour
 
     public List<Upgrade> GetSelectedUpgrades()
     {
+        SelectUpgrades();
         return selectedUpgrades;
     }
 }
