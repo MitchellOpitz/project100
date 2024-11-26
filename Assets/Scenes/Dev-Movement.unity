@@ -1383,23 +1383,23 @@ MonoBehaviour:
     speed: 3
     health: 3
   - enemyPrefab: {fileID: 262690688024122312, guid: 797968630b2ef1a47a2749465e0dbc81, type: 3}
-    spawnRate: 999
+    spawnRate: 2
     speed: 3
     health: 3
   - enemyPrefab: {fileID: 5972292161304464539, guid: 3445296fe64ea3b49a1b4c3fb984f1ff, type: 3}
-    spawnRate: 999
+    spawnRate: 3
     speed: 3
     health: 3
   - enemyPrefab: {fileID: 4450494619405364142, guid: 46af5ecfa07245641855797237493037, type: 3}
-    spawnRate: 999
+    spawnRate: 3.5
     speed: 3
     health: 3
   - enemyPrefab: {fileID: 8120572078259269790, guid: ab93b8d68e09467428a4daa5fdedb99c, type: 3}
-    spawnRate: 999
+    spawnRate: 4
     speed: 3
     health: 3
   - enemyPrefab: {fileID: 8127058149683652487, guid: 45701665236f5c64084c5e515de6afe0, type: 3}
-    spawnRate: 999
+    spawnRate: 4.5
     speed: 3
     health: 3
 --- !u!1 &681848257
