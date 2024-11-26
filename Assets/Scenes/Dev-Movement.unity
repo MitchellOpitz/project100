@@ -1221,7 +1221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseExperienceForLevel: 100
   experienceGrowthFactor: 1.5
-  experiencePerPickup: 10
+  experiencePerPickup: 25
 --- !u!1 &711788862
 GameObject:
   m_ObjectHideFlags: 0
