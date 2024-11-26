@@ -10,13 +10,14 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         nextSpawnTimes = new float[enemyData.Length];
-        StartSpawner();
+        Countdown.OnCountdownComplete += StartSpawner;
         ExperienceManager.OnLevelUp += StopSpawning; // Subscribe to the level-up event
     }
 
     private void OnDestroy()
     {
         // Unsubscribe when the object is destroyed
+        Countdown.OnCountdownComplete -= StartSpawner;
         ExperienceManager.OnLevelUp -= StopSpawning;
     }
 
@@ -27,6 +28,7 @@ public class EnemySpawner : MonoBehaviour
         {
             nextSpawnTimes[i] = Time.time + enemyData[i].spawnRate;
         }
+        isSpawningActive = true;
         StartCoroutine(SpawnEnemies());
     }
 
