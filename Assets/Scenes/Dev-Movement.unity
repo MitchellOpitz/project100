@@ -946,7 +946,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.06839684, g: 0, b: 0.11320752, a: 0}
+  m_BackGroundColor: {r: 0.06839684, g: 0, b: 0.11320752, a: 0.003921569}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2017,6 +2017,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cfaed1f3aa0003c42b7ed38da08b5670, type: 2}
   selectedUpgrades: []
   optionsCount: 3
+  maxAttempts: 25
 --- !u!1 &1189343900
 GameObject:
   m_ObjectHideFlags: 0

@@ -37,6 +37,14 @@ public class UpgradeUI : MonoBehaviour
         // Get the selected upgrades from the UpgradeSelector
         List<Upgrade> selectedUpgrades = upgradeSelector.GetSelectedUpgrades();
 
+        // If no upgrades are available, close the UI and exit
+        if (selectedUpgrades.Count == 0)
+        {
+            upgradeMenuUI.SetActive(false);
+            UpgradeManager.NoUpgrade();
+            yield break; // Exit the coroutine early
+        }
+
         // Clear existing options before populating new ones
         foreach (Transform child in upgradeOptionsParent)
         {
@@ -66,6 +74,7 @@ public class UpgradeUI : MonoBehaviour
         // Show the upgrade menu
         upgradeMenuUI.SetActive(true);
     }
+
 
     private void CloseUpgradeMenuUI()
     {

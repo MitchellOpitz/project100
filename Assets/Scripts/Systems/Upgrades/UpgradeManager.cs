@@ -31,6 +31,11 @@ public class UpgradeManager : MonoBehaviour
         OnUpgradeSelected?.Invoke();
     }
 
+    public static void NoUpgrade()
+    {
+        OnUpgradeSelected?.Invoke();
+    }
+
     // Method to get the rank of an upgrade by its name
     public static int GetUpgradeRank(string upgradeName)
     {
