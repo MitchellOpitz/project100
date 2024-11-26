@@ -2134,6 +2134,7 @@ GameObject:
   - component: {fileID: 1161349455}
   - component: {fileID: 1161349454}
   - component: {fileID: 1161349453}
+  - component: {fileID: 1161349457}
   m_Layer: 5
   m_Name: UpgradeUI
   m_TagString: Untagged
@@ -2238,6 +2239,24 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1161349457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161349451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aee4ce626ab0d74ebd4f579f17b49ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allUpgrades:
+  - {fileID: 11400000, guid: eefa213848330b144b618f3457cc0190, type: 2}
+  - {fileID: 11400000, guid: 23b547cd1081c354e8b82d6a409f43db, type: 2}
+  - {fileID: 11400000, guid: cfaed1f3aa0003c42b7ed38da08b5670, type: 2}
+  selectedUpgrades: []
+  optionsCount: 3
 --- !u!1 &1189343900
 GameObject:
   m_ObjectHideFlags: 0
