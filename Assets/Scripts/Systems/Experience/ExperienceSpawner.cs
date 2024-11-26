@@ -9,11 +9,13 @@ public class ExperienceSpawner : MonoBehaviour
     private void OnEnable()
     {
         Enemy.OnEnemyKilled += SpawnExperience; // Directly subscribe
+        UpgradeManager.OnUpgradeSelected += OnUpgradeSelected;
     }
 
     private void OnDisable()
     {
         Enemy.OnEnemyKilled -= SpawnExperience; // Unsubscribe
+        UpgradeManager.OnUpgradeSelected -= OnUpgradeSelected;
     }
 
     private void SpawnExperience(int scoreValue, Vector3 position)
@@ -23,6 +25,17 @@ public class ExperienceSpawner : MonoBehaviour
             Vector3 randomOffset = Random.insideUnitCircle * spawnRadius;
             Vector3 spawnPosition = position + new Vector3(randomOffset.x, randomOffset.y, 0); // Adjust for 3D space
             Instantiate(experiencePrefab, spawnPosition, Quaternion.identity);
+        }
+    }
+
+    private void OnUpgradeSelected()
+    {
+        int experienceDroppedRank = UpgradeManager.GetUpgradeRank("Experience Dropped");
+
+        // Adjust the fire rate based on the AttackSpeed upgrade
+        if (experienceDroppedRank > 0)
+        {
+            numberOfOrbs = experienceDroppedRank + 3;
         }
     }
 }
