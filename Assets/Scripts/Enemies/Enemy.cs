@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using FMODUnity;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -48,6 +49,7 @@ public abstract class Enemy : MonoBehaviour
         OnEnemyDeath?.Invoke(transform.position, particleColor);
 
         // Destroy the enemy object
+        RuntimeManager.PlayOneShot("event:/EnemyDefeated");
         Destroy(gameObject);
     }
 

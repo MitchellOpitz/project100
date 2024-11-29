@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using FMODUnity;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -32,12 +33,14 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
+            RuntimeManager.PlayOneShot("event:/PlayerHurt");
             invulnerability.Activate();  // Trigger invulnerability
         }
     }
 
     private void Die()
     {
+        RuntimeManager.PlayOneShot("event:/PlayerDeath");
         OnPlayerDeath?.Invoke();
         Destroy(gameObject);
     }
