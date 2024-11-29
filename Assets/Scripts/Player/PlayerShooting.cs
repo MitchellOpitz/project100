@@ -1,4 +1,5 @@
 using UnityEngine;
+using FMODUnity;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -50,7 +51,7 @@ public class PlayerShooting : MonoBehaviour
         }
 
         // Play the shooting sound
-        // AudioManager.Instance.PlaySFX("Shoot");
+        RuntimeManager.PlayOneShot("event:/Shoot");
     }
 
     private void OnUpgradeSelected()
