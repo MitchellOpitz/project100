@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using FMODUnity;
 
 public class ExperiencePickup : MonoBehaviour
 {
@@ -55,6 +56,7 @@ public class ExperiencePickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             TriggerPickupEvent();
+            RuntimeManager.PlayOneShot("event:/ExpPickup");
             Destroy(gameObject); // Destroy immediately on player pickup
         }
     }
