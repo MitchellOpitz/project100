@@ -32,6 +32,7 @@ public class WaveManager : MonoBehaviour
         if (currentWaveIndex >= waves.Length)
         {
             Debug.Log("All waves completed!");
+            StartInfiniteScaling();
             return; // No more waves to start
         }
 
@@ -64,5 +65,24 @@ public class WaveManager : MonoBehaviour
                 }
             }
         }
+    }
+    private void StartInfiniteScaling()
+    {
+        Debug.Log("Infinite scaling activated!");
+
+        // Scale enemy attributes by 5%
+        foreach (SpawnerData spawnerData in enemySpawner.enemyData)
+        {
+            spawnerData.spawnRate *= 0.95f; // Increase spawn rate by 5%
+            spawnerData.speed *= 1.05f; // Increase speed by 5%
+            spawnerData.health *= 1.05f; // Increase health by 5%
+        }
+
+        // Notify listeners that the wave has changed (optional: to indicate infinite scaling)
+        OnWaveChanged?.Invoke(currentWaveIndex);
+
+        // Trigger the next infinite wave
+        currentWaveIndex++; // Increment wave index for clarity
+        Debug.Log($"Infinite Wave {currentWaveIndex} scaling applied.");
     }
 }
