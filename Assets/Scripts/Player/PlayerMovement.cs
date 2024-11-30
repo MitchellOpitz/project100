@@ -37,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
     {
         // Movement
         float finalMoveSpeed = speed * (1 + moveSpeedRank * 0.1f);
-        Debug.Log($"Final Move Speed: {finalMoveSpeed}");
         Vector2 newPosition = rb.position + moveDirection * finalMoveSpeed * Time.fixedDeltaTime;
 
         // Clamp position using GameBoundary singleton
