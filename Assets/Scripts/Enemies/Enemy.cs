@@ -8,15 +8,17 @@ public abstract class Enemy : MonoBehaviour
     public static event Action<int, Vector3> OnEnemyKilled;
     public static event Action<Vector3, Color> OnEnemyDeath;
 
-    public int health = 3;  // Default health for the enemy
+    public float health = 3;  // Default health for the enemy
     public float speed;
     public int scoreValue = 100;
 
     public abstract void Move();
 
-    public void TakeDamage()
+    public void TakeDamage(float damage)
     {
-        health -= 1;
+        Debug.Log($"Damage taken: {damage}");
+        health -= damage;
+        Debug.Log($"New health value: {health}");
 
         // Check if the enemy is dead
         if (health <= 0)

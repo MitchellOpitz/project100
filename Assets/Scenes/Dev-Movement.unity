@@ -2078,6 +2078,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9233e2ec237d83e46b83f97ab1b89e8d, type: 2}
   - {fileID: 11400000, guid: bcec1ae741fb31c47ac70e8bcb8219c2, type: 2}
   - {fileID: 11400000, guid: 7c9a6a644ccdac24da21e04dd661dece, type: 2}
+  - {fileID: 11400000, guid: e4094e9adda8c014db6f46b9091f3384, type: 2}
   selectedUpgrades: []
   optionsCount: 5
   maxAttempts: 25
