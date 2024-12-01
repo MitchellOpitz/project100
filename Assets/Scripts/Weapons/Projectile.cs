@@ -12,6 +12,7 @@ public class Projectile : MonoBehaviour
 
     private int damageMultiplierRank;
     private int critMultiplierRank;
+    private int critChanceRank;
     private Rigidbody2D rb;
     private GameBoundary gameBoundary;
 
@@ -22,6 +23,7 @@ public class Projectile : MonoBehaviour
         gameBoundary = GameBoundary.Instance;  // Use GameBoundary singleton
         damageMultiplierRank = UpgradeManager.GetUpgradeRank("Damage Multiplier");
         critMultiplierRank = UpgradeManager.GetUpgradeRank("Crit Multiplier");
+        critChanceRank = UpgradeManager.GetUpgradeRank("Critical Chance");
     }
 
     void Update()
@@ -43,7 +45,9 @@ public class Projectile : MonoBehaviour
             if (enemy != null)
             {
                 // Call a method on the enemy to deal damage
-                bool criticalStrike = UnityEngine.Random.Range(0f, 100f) < baseCritChance;
+                float criticalStrikeChance = (baseCritChance + (critChanceRank * 5f));
+                Debug.Log($"crit chance: {criticalStrikeChance}");
+                bool criticalStrike = UnityEngine.Random.Range(0f, 100f) < (baseCritChance + (critChanceRank * 5f));
                 float finalDamageValue = damage * (1 + (float)damageMultiplierRank * .10f);
                 if (criticalStrike)
                 {
