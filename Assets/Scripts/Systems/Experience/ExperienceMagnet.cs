@@ -6,11 +6,23 @@ using UnityEngine;
 public class ExperienceMagnet : MonoBehaviour
 {
     private CircleCollider2D circleCollider;
+    private int experienceMagnetRank;
     [SerializeField] private float pullSpeed = 5f; // Speed at which experience moves towards the magnet
 
     void Start()
     {
         circleCollider = GetComponent<CircleCollider2D>();
+        experienceMagnetRank = 0;
+    }
+
+    private void OnEnable()
+    {
+        UpgradeManager.OnUpgradeSelected += OnUpgradeSelected;
+    }
+
+    private void OnDisable()
+    {
+        UpgradeManager.OnUpgradeSelected -= OnUpgradeSelected;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -36,5 +48,11 @@ public class ExperienceMagnet : MonoBehaviour
             // Snap the experience to the magnet's position when close enough
             experience.position = transform.position;
         }
+    }
+    
+    private void OnUpgradeSelected()
+    {
+        experienceMagnetRank = UpgradeManager.GetUpgradeRank("Experience Magnet");
+        circleCollider.radius = experienceMagnetRank;
     }
 }

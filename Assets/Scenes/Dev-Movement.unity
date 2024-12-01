@@ -2079,8 +2079,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bcec1ae741fb31c47ac70e8bcb8219c2, type: 2}
   - {fileID: 11400000, guid: 7c9a6a644ccdac24da21e04dd661dece, type: 2}
   - {fileID: 11400000, guid: e4094e9adda8c014db6f46b9091f3384, type: 2}
+  - {fileID: 11400000, guid: da91c6c250cc6c1419076712f102a554, type: 2}
   selectedUpgrades: []
-  optionsCount: 5
+  optionsCount: 7
   maxAttempts: 25
 --- !u!1 &1189343900
 GameObject:
@@ -2619,6 +2620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df71842889040c642bd71873bfbe1738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pullSpeed: 5
 --- !u!58 &1842824673
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2653,7 +2655,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 0.0001
 --- !u!50 &1842824674
 Rigidbody2D:
   serializedVersion: 4
