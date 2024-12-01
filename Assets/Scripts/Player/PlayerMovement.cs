@@ -7,9 +7,22 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveDirection;
 
+    private int moveSpeedRank;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        moveSpeedRank = 0;
+    }
+
+    private void OnEnable()
+    {
+        UpgradeManager.OnUpgradeSelected += OnUpgradeSelected;
+    }
+
+    private void OnDisable()
+    {
+        UpgradeManager.OnUpgradeSelected -= OnUpgradeSelected;
     }
 
     private void Update()
@@ -23,11 +36,17 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // Movement
-        Vector2 newPosition = rb.position + moveDirection * speed * Time.fixedDeltaTime;
+        float finalMoveSpeed = speed * (1 + moveSpeedRank * 0.1f);
+        Vector2 newPosition = rb.position + moveDirection * finalMoveSpeed * Time.fixedDeltaTime;
 
         // Clamp position using GameBoundary singleton
         newPosition = GameBoundary.Instance.ClampPosition(newPosition, GetComponent<Collider2D>());
 
         rb.MovePosition(newPosition);
+    }
+
+    private void OnUpgradeSelected()
+    {
+        moveSpeedRank = UpgradeManager.GetUpgradeRank("Move Speed");
     }
 }

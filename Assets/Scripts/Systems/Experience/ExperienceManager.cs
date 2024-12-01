@@ -10,6 +10,8 @@ public class ExperienceManager : MonoBehaviour
     private int currentLevel = 1;
     private int experienceNeededForNextLevel;
 
+    private int experiencePerKillRank;
+
     [SerializeField] private int baseExperienceForLevel = 100; // Base experience required for level 1
     [SerializeField] private float experienceGrowthFactor = 1.5f; // Multiplier for each level's experience requirement
     [SerializeField] private int experiencePerPickup = 10; // Experience gained per pickup
@@ -18,21 +20,25 @@ public class ExperienceManager : MonoBehaviour
     {
         // Initialize experience needed for the first level
         experienceNeededForNextLevel = CalculateExperienceForLevel(currentLevel);
+        experiencePerKillRank = 0;
     }
 
     private void OnEnable()
     {
         ExperiencePickup.OnExperiencePickedUp += OnExperiencePickedUp;
+        UpgradeManager.OnUpgradeSelected += OnUpgradeSelected;
     }
 
     private void OnDisable()
     {
         ExperiencePickup.OnExperiencePickedUp -= OnExperiencePickedUp;
+        UpgradeManager.OnUpgradeSelected -= OnUpgradeSelected;
     }
 
     private void OnExperiencePickedUp(ExperiencePickup pickup)
     {
-        currentExperience += experiencePerPickup;
+        int finalExperienceValue = (int)(experiencePerPickup * (1 + (experiencePerKillRank * .10f)));
+        currentExperience += finalExperienceValue;
         Debug.Log($"Experience picked up! Current Experience: {currentExperience}/{experienceNeededForNextLevel}");
 
         // Trigger the UI update event
@@ -64,5 +70,11 @@ public class ExperienceManager : MonoBehaviour
     private int CalculateExperienceForLevel(int level)
     {
         return Mathf.RoundToInt(baseExperienceForLevel * Mathf.Pow(experienceGrowthFactor, level - 1));
+    }
+
+    private void OnUpgradeSelected()
+    {
+        experiencePerKillRank = UpgradeManager.GetUpgradeRank("Experience Per Kill");
+        Debug.Log($"New experience per kill rank: {experiencePerKillRank}");
     }
 }

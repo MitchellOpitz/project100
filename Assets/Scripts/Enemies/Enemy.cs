@@ -8,14 +8,17 @@ public abstract class Enemy : MonoBehaviour
     public static event Action<int, Vector3> OnEnemyKilled;
     public static event Action<Vector3, Color> OnEnemyDeath;
 
-    public int health = 3;  // Default health for the enemy
+    public float health = 3;  // Default health for the enemy
     public float speed;
     public int scoreValue = 100;
+
     public abstract void Move();
 
-    public void TakeDamage()
+    public void TakeDamage(float damage)
     {
-        health -= 1;
+        Debug.Log($"Damage taken: {damage}");
+        health -= damage;
+        Debug.Log($"New health value: {health}");
 
         // Check if the enemy is dead
         if (health <= 0)
@@ -36,8 +39,14 @@ public abstract class Enemy : MonoBehaviour
 
     private void Die()
     {
-        // Pass both the score value and the enemy's position
-        OnEnemyKilled?.Invoke(scoreValue, transform.position);
+        // Use the cached multiplier rank from ScoreManager
+        int scoreMultiplierRank = UpgradeManager.GetUpgradeRank("Score Multiplier");
+        Debug.Log($"Cached Score Multiplier Rank used in Die: {scoreMultiplierRank}");
+
+        int finalScoreValue = Mathf.RoundToInt(scoreValue * (1 + scoreMultiplierRank * 0.25f));
+        Debug.Log($"ScoreValue: {scoreValue}, MultiplierRank: {scoreMultiplierRank}, FinalScoreValue: {finalScoreValue}");
+
+        OnEnemyKilled?.Invoke(finalScoreValue, transform.position);
         DestroyEnemy();
     }
 
