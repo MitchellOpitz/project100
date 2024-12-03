@@ -13,6 +13,10 @@ public class Projectile : MonoBehaviour
     private int damageMultiplierRank;
     private int critMultiplierRank;
     private int critChanceRank;
+    private int pierceChanceRank;
+
+    private int maxPierce = 1;
+    private int currentPierce;
     private Rigidbody2D rb;
     private GameBoundary gameBoundary;
 
@@ -24,6 +28,8 @@ public class Projectile : MonoBehaviour
         damageMultiplierRank = UpgradeManager.GetUpgradeRank("Damage Multiplier");
         critMultiplierRank = UpgradeManager.GetUpgradeRank("Crit Multiplier");
         critChanceRank = UpgradeManager.GetUpgradeRank("Critical Chance");
+        pierceChanceRank = UpgradeManager.GetUpgradeRank("Pierce Chance");
+        currentPierce = 0;
     }
 
     void Update()
@@ -64,7 +70,16 @@ public class Projectile : MonoBehaviour
                 OnProjectileHit?.Invoke(transform.position, particleColor);
             }
 
-            Destroy(gameObject);  // Destroy the projectile after hitting an enemy
+            bool pierceStrike = UnityEngine.Random.Range(0f, 100f) < (pierceChanceRank * 10f);
+            if (pierceStrike && currentPierce < maxPierce)
+            {
+                currentPierce++;
+                return;
+            }
+            else
+            {
+                Destroy(gameObject);  // Destroy the projectile after hitting an enemy
+            }
         }
     }
 }
