@@ -9,10 +9,13 @@ public class PlayerHealth : MonoBehaviour
     public event Action<int> OnLivesChanged;
     public event Action OnPlayerDeath;
 
+    private int healthRegenRank;
+
     private Invulnerability invulnerability;  // Reference to the Invulnerability script
 
     private void Start()
     {
+        healthRegenRank = 0;
         currentLives = maxLives;
         invulnerability = GetComponent<Invulnerability>();
 
@@ -23,11 +26,13 @@ public class PlayerHealth : MonoBehaviour
     private void OnEnable()
     {
         UpgradeManager.OnUpgradeSelected += OnUpgradeSelected;
+        WaveManager.OnWaveChanged += _ => OnWaveStart();
     }
 
     private void OnDisable()
     {
         UpgradeManager.OnUpgradeSelected -= OnUpgradeSelected;
+        WaveManager.OnWaveChanged -= _ => OnWaveStart();
     }
 
     public void TakeDamage()
@@ -58,5 +63,16 @@ public class PlayerHealth : MonoBehaviour
     private void OnUpgradeSelected()
     {
         maxLives = UpgradeManager.GetUpgradeRank("Max Health") + 3;
+        healthRegenRank = UpgradeManager.GetUpgradeRank("Health Regen");
+    }
+
+    private void OnWaveStart()
+    {
+        currentLives = currentLives + healthRegenRank;
+        if (currentLives > maxLives)
+        {
+            currentLives = maxLives;
+        }
+        OnLivesChanged?.Invoke(currentLives);
     }
 }

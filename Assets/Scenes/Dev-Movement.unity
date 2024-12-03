@@ -2073,7 +2073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allUpgrades:
   - {fileID: 11400000, guid: 23b547cd1081c354e8b82d6a409f43db, type: 2}
-  - {fileID: 11400000, guid: cfaed1f3aa0003c42b7ed38da08b5670, type: 2}
+  - {fileID: 11400000, guid: a05d696dff9d59448b2e6cf85e3e4caf, type: 2}
   - {fileID: 11400000, guid: ad7f377ce4b5e93478e8a5d86c5dae14, type: 2}
   selectedUpgrades: []
   optionsCount: 3
@@ -2650,7 +2650,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.0001
+  m_Radius: 10
 --- !u!50 &1842824674
 Rigidbody2D:
   serializedVersion: 4
