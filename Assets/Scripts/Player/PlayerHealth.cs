@@ -20,6 +20,16 @@ public class PlayerHealth : MonoBehaviour
         OnLivesChanged?.Invoke(currentLives);
     }
 
+    private void OnEnable()
+    {
+        UpgradeManager.OnUpgradeSelected += OnUpgradeSelected;
+    }
+
+    private void OnDisable()
+    {
+        UpgradeManager.OnUpgradeSelected -= OnUpgradeSelected;
+    }
+
     public void TakeDamage()
     {
         if (invulnerability.IsInvulnerable) return;  // Ignore damage if invulnerable
@@ -43,5 +53,14 @@ public class PlayerHealth : MonoBehaviour
         RuntimeManager.PlayOneShot("event:/PlayerDeath");
         OnPlayerDeath?.Invoke();
         Destroy(gameObject);
+    }
+
+    private void OnUpgradeSelected()
+    {
+        maxLives = UpgradeManager.GetUpgradeRank("Max Health") + 3;
+        Debug.Log($"New max health: {maxLives}");
+        currentLives = maxLives;
+        OnLivesChanged?.Invoke(currentLives);
+
     }
 }
