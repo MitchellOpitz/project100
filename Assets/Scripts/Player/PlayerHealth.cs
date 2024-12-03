@@ -58,9 +58,5 @@ public class PlayerHealth : MonoBehaviour
     private void OnUpgradeSelected()
     {
         maxLives = UpgradeManager.GetUpgradeRank("Max Health") + 3;
-        Debug.Log($"New max health: {maxLives}");
-        currentLives = maxLives;
-        OnLivesChanged?.Invoke(currentLives);
-
     }
 }
