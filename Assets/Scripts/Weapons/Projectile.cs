@@ -15,7 +15,7 @@ public class Projectile : MonoBehaviour
     private int critChanceRank;
     private int pierceChanceRank;
 
-    private int maxPierce = 1;
+    private int maxPierce;
     private int currentPierce;
     private Rigidbody2D rb;
     private GameBoundary gameBoundary;
@@ -29,6 +29,7 @@ public class Projectile : MonoBehaviour
         critMultiplierRank = UpgradeManager.GetUpgradeRank("Crit Multiplier");
         critChanceRank = UpgradeManager.GetUpgradeRank("Critical Chance");
         pierceChanceRank = UpgradeManager.GetUpgradeRank("Pierce Chance");
+        maxPierce = UpgradeManager.GetUpgradeRank("Pierce Number");
         currentPierce = 0;
     }
 
